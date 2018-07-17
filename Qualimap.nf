@@ -74,9 +74,9 @@ process qualimap {
     gcref = params.genome == 'GRCh37' ? '-gd HUMAN' : ''
     gcref = params.genome == 'GRCm38' ? '-gd MOUSE' : ''
     """
-    ${params.samtools} sort $bam -o ${bam.baseName}.sorted.bam
-   ${params.qualimap} bamqc -nt ${params.cpu} -bam $bam -outdir ${bam.baseName}.qualimap -outformat html
-    ${params.samtools} flagstat $bam > qualimap_results
+    !{params.samtools} sort !bam -o !{bam.baseName}.sorted.bam
+   !{params.qualimap} bamqc -nt !{params.cpu} -bam !bam -outdir !{bam.baseName}.qualimap -outformat html
+    !{params.samtools} flagstat !bam > qualimap_results
     """
 }
 
@@ -89,6 +89,6 @@ process multiqc{
 	publishDir '${params.output_folder}', mode: 'copy', pattern: '{*.html}'
             shell:
             '''
-	  ${params.multiqc} -d qualimap_results
+	  !{params.multiqc} -d qualimap_results
             '''
 }

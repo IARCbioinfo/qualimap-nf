@@ -71,8 +71,7 @@ process qualimap {
     file "${bam.baseName}_qualimap" into qualimap_results
 
     script:
-    gcref = params.genome == 'GRCh37' ? '-gd HUMAN' : ''
-    gcref = params.genome == 'GRCm38' ? '-gd MOUSE' : ''
+
     """
     !{params.samtools} sort !bam -o !{bam.baseName}.sorted.bam
    !{params.qualimap} bamqc -nt !{params.cpu} -bam !bam -outdir !{bam.baseName}.qualimap -outformat html

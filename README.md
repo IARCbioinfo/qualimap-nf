@@ -1,6 +1,8 @@
 
 # Quality control of WGS alignment data #
 
+![Image Qualimap](https://github.com/ImaneLboukili/WGS_analysis/blob/master/Qualimap/Qualimap-nf.png)
+
 ## Description ##
 
 Perform quality control of WGS alignment data. 

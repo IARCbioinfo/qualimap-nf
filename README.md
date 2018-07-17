@@ -1,5 +1,5 @@
 
-#Quality control of WGS alignment data
+# Quality control of WGS alignment data #
 
 ## Description ##
 

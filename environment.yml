@@ -1,0 +1,7 @@
+name: Qualimap
+channels:
+  - bioconda
+dependencies:
+  - qualimap= 2.2
+  - samtools=1.6
+  - multiqc=1.5

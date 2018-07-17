@@ -7,10 +7,10 @@ Perform quality control of WGS alignment data.
 
 ## Dependencies ##
 
-This pipeline is based on nextflow. As we have several nextflow pipelines, we have centralized the common information in the IARC-nf repository. Please read it carefully as it contains essential information for the installation, basic usage and configuration of nextflow and our pipelines.
-samtools: see official installation here. You can avoid installing all the external software by only installing Docker (not available yet). See the IARC-nf repository for more information.)
-Qualimap: see official installation here. You can avoid installing all the external software by only installing Docker (not available yet). See the IARC-nf repository for more information.)
-Multiqc: see official installation here. You can avoid installing all the external software by only installing Docker (not available yet). See the IARC-nf repository for more information.)
+1. This pipeline is based on nextflow. As we have several nextflow pipelines, we have centralized the common information in the IARC-nf repository. Please read it carefully as it contains essential information for the installation, basic usage and configuration of nextflow and our pipelines.
+2. samtools: see official installation here. You can avoid installing all the external software by only installing Docker (not available yet). See the IARC-nf repository for more information.)
+3. Qualimap: see official installation here. You can avoid installing all the external software by only installing Docker (not available yet). See the IARC-nf repository for more information.)
+4. Multiqc: see official installation here. You can avoid installing all the external software by only installing Docker (not available yet). See the IARC-nf repository for more information.)
 
 ## Input ##
 

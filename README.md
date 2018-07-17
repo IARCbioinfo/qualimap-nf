@@ -1,6 +1,8 @@
 
 # Quality control of WGS alignment data #
 
+
+
 ## Description ##
 
 Perform quality control of WGS alignment data. 

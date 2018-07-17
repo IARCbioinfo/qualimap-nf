@@ -41,7 +41,7 @@ Flags are special parameters without value.
 
 ## Download test data set ##
 
-`git clone blablabla`
+`git clone https://github.com/iarcbioinfo/data_test`
 
 ## Usage ##
 `nextflow run iarcbioinfo/Qualimap.nf   --qualimap /path/to/qualimap  --multiqc /path/to/multiqc --samtools /path/to/samtools --input_folder /path/to/bam  --output_folder /path/to/output`

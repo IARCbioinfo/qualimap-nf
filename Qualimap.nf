@@ -73,9 +73,9 @@ process qualimap {
     script:
 
     """
-    !{params.samtools} sort !{bam}.bam -o !{bam.baseName}.sorted.bam
-   !{params.qualimap} bamqc -nt !{params.cpu} -bam !{bam}.bam -outdir !{bam.baseName}.qualimap -outformat html
-    !{params.samtools} flagstat !{bam}.bam > !{bam.baseName}.dup.stats.txt
+    ${params.samtools} sort ${bam} -o ${bam.baseName}.sorted.bam
+   ${params.qualimap} bamqc -nt ${params.cpu} -bam ${bam} -outdir ${bam.baseName}.qualimap -outformat html
+    ${params.samtools} flagstat ${bam} > ${bam.baseName}.dup.stats.txt
     """
 }
 
@@ -88,6 +88,6 @@ process multiqc{
 	publishDir '${params.output_folder}', mode: 'copy', pattern: '{*.html}'
             shell:
             '''
-	  !{params.multiqc} -d qualimap_results
+	  ${params.multiqc} -d qualimap_results
             '''
 }

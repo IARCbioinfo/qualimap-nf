@@ -40,7 +40,7 @@ if (params.help) {
     log.info ""
     log.info "Mandatory arguments:"
     log.info "--qualimap              PATH               Qualimap installation dir"
-    log.info "--samptools              PATH              Samtools installation dir"
+    log.info "--samtools              PATH              Samtools installation dir"
     log.info "--multiqc              PATH               MultiQC installation dir"
     log.info "--input_folder         FOLDER               Folder containing bam files"
     log.info "--output_folder        PATH                 Output directory for html and zip files (default=fastqc_ouptut)" 

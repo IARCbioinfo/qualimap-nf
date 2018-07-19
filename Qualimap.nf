@@ -18,8 +18,8 @@
 
 params.help          		 = null
 params.config         		= null
-params.cpu            		= "8"
-params.mem                  ="32"
+params.cpu            		= 8
+params.mem                  =32
 
 log.info ""
 log.info "----------------------------------------------------------------"
@@ -65,7 +65,8 @@ bams = Channel.fromPath( params.input_folder+'/*.bam' )
 process qualimap {
     tag "${bam.baseName}"
     publishDir "${params.outdir}/qualimap", mode: 'copy'
-
+ cpus params.cpu
+  memory params.mem+'GB'
     input:
     file bam from bams
 

@@ -19,6 +19,7 @@
 params.help          		 = null
 params.config         		= null
 params.cpu            		= "8"
+params.mem                  ="32"
 
 log.info ""
 log.info "----------------------------------------------------------------"
@@ -46,8 +47,9 @@ if (params.help) {
     log.info "--output_folder        PATH                 Output directory for html and zip files (default=fastqc_ouptut)" 
     log.info ""
     log.info "Optional arguments:"
-    log.info "--cpu                  INTEGER              Number of cpu to use (default=2)"
+    log.info "--cpu                  INTEGER              Number of cpu to use (default=8)"
     log.info "--config               FILE                 Use custom configuration file"
+    log.info "--mem                  INTEGER              Size of memory used. Default 32Gb"
     log.info ""
     log.info "Flags:"
     log.info "--help                                      Display this message"

@@ -76,7 +76,7 @@ process qualimap {
     script:
 
     """
-   ${params.qualimap} bamqc -nt ${params.cpu} -bam ${bam} --java-mem-size=4G -outdir ${output_folder} -outformat html
+   ${params.qualimap} bamqc -nt ${params.cpu} -bam ${bam} --java-mem-size=4G -outdir ${params.output_folder} -outformat html
    ${params.samtools} flagstat ${bam} > ${bam.baseName}.dup.stats.txt
     """
 }

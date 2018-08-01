@@ -76,8 +76,8 @@ process qualimap {
     script:
 
     """
-   ${params.qualimap} bamqc -nt ${params.cpu} -bam ${bam} -outdir ${bam.baseName}.qualimap -outformat html
-    ${params.samtools} flagstat ${bam} > ${bam.baseName}.dup.stats.txt
+   ${params.qualimap} bamqc -nt ${params.cpu} -bam ${bam} -outdir ${output_folder} -outformat html
+   ${params.samtools} flagstat ${bam} > ${bam.baseName}.dup.stats.txt
     """
 }
 

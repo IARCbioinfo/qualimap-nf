@@ -63,20 +63,18 @@ bams = Channel.fromPath( params.input_folder+'/*.bam' )
 
 
 process qualimap {
-    tag "${bam.baseName}"
-    publishDir "${params.output_folder}/qualimap", mode: 'copy'
- cpus params.cpu
-  memory params.mem+'GB'
+
+
     input:
     file bam from bams
 
     output:
-    file "${bam.baseName}_qualimap" into qualimap_results
+   publishDir '${params.output_folder}', mode: 'copy', pattern: '{*.html}'
 
     script:
 
     """
-   ${params.qualimap} bamqc -nt ${params.cpu} -bam ${bam} --java-mem-size=4G -outdir ${params.output_folder} -outformat html
+   ${params.qualimap} bamqc -nt ${params.cpu} -bam ${bam} --java-mem-size=40G -outdir ${params.output_folder} -outformat html
    ${params.samtools} flagstat ${bam} > ${bam.baseName}.dup.stats.txt
     """
 }
@@ -90,7 +88,9 @@ process multiqc{
 	publishDir '${params.output_folder}', mode: 'copy', pattern: '{*.html}'
             shell:
             '''
-	  ${params.multiqc} -d qualimap_results
+	  ${params.multiqc} -d !{params.output_folder}
+	  
+	  
             '''
 }
 

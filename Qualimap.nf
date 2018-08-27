@@ -63,13 +63,13 @@ bams = Channel.fromPath( params.input_folder+'/*.bam' )
 
 
 process qualimap {
-
+ publishDir '${params.output_folder}', mode: 'copy'
 
     input:
     file bam from bams
 
     output:
-   publishDir '${params.output_folder}', mode: 'copy', pattern: '{*.html}'
+   set file('*.html') into qualimap_results
 
     script:
 

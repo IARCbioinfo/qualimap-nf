@@ -20,6 +20,11 @@ params.help	= null
 params.config = null
 params.cpu = 1
 params.mem = 4
+params.qualimap = "qualimap"
+params.samtools = "samtools"
+params.multiqc = "multiqc"
+params.input_folder = "BAM/"
+params.output_folder = "."
 
 log.info ""
 log.info "----------------------------------------------------------------"
@@ -40,11 +45,11 @@ if (params.help) {
     log.info "nextflow run iarcbioinfo/Qualimap.nf   --qualimap /path/to/qualimap  --multiqc /path/to/multiqc --samtools /path/to/samtools --input_folder /path/to/bam  --output_folder /path/to/output"
     log.info ""
     log.info "Mandatory arguments:"
-    log.info "--qualimap              PATH               Qualimap installation dir"
-    log.info "--samtools              PATH              Samtools installation dir"
-    log.info "--multiqc              PATH               MultiQC installation dir"
-    log.info "--input_folder         FOLDER               Folder containing bam files"
-    log.info "--output_folder        PATH                 Output directory for html and zip files (default=fastqc_ouptut)"
+    log.info "--qualimap             PATH                 Qualimap installation dir"
+    log.info "--samtools             PATH                 Samtools installation dir"
+    log.info "--multiqc              PATH                 MultiQC installation dir"
+    log.info "--input_folder         FOLDER               Folder containing bam files (default=BAM/)"
+    log.info "--output_folder        PATH                 Output directory for html and zip files (default=.)"
     log.info ""
     log.info "Optional arguments:"
     log.info "--cpu                  INTEGER              Number of cpu to use (default=1)"

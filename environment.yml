@@ -1,7 +1,8 @@
 name: Qualimap
 channels:
+  - conda-forge
   - bioconda
 dependencies:
-  - qualimap= 2.2
-  - samtools=1.6
-  - multiqc=1.5
+  - qualimap=2.2.2b
+  - samtools=1.8
+  - multiqc=1.6

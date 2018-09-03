@@ -68,7 +68,7 @@ bams = Channel.fromPath( params.input_folder+'/*.bam' )
 
 
 process qualimap {
-    cpu params.cpu
+    cpus params.cpu
     memory params.mem+'G'
   	tag { bam_tag }
 

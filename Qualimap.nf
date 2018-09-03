@@ -16,10 +16,10 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-params.help          		 = null
-params.config         		= null
-params.cpu            		= 28
-params.mem                  =32
+params.help	= null
+params.config = null
+params.cpu = 1
+params.mem = 4
 
 log.info ""
 log.info "----------------------------------------------------------------"
@@ -36,7 +36,7 @@ if (params.help) {
     log.info "--------------------------------------------------------"
     log.info ""
     log.info "-------------------QC-------------------------------"
-    log.info "" 
+    log.info ""
     log.info "nextflow run iarcbioinfo/Qualimap.nf   --qualimap /path/to/qualimap  --multiqc /path/to/multiqc --samtools /path/to/samtools --input_folder /path/to/bam  --output_folder /path/to/output"
     log.info ""
     log.info "Mandatory arguments:"
@@ -44,18 +44,18 @@ if (params.help) {
     log.info "--samtools              PATH              Samtools installation dir"
     log.info "--multiqc              PATH               MultiQC installation dir"
     log.info "--input_folder         FOLDER               Folder containing bam files"
-    log.info "--output_folder        PATH                 Output directory for html and zip files (default=fastqc_ouptut)" 
+    log.info "--output_folder        PATH                 Output directory for html and zip files (default=fastqc_ouptut)"
     log.info ""
     log.info "Optional arguments:"
-    log.info "--cpu                  INTEGER              Number of cpu to use (default=28)"
+    log.info "--cpu                  INTEGER              Number of cpu to use (default=1)"
     log.info "--config               FILE                 Use custom configuration file"
-    log.info "--mem                  INTEGER              Size of memory used. Default 32Gb"
+    log.info "--mem                  INTEGER              Size of memory used. Default 4Gb"
     log.info ""
     log.info "Flags:"
     log.info "--help                                      Display this message"
     log.info ""
     exit 1
-} 
+}
 
 bams = Channel.fromPath( params.input_folder+'/*.bam' )
               .ifEmpty { error "Cannot find any bam file in: ${params.input_folder}" }
@@ -63,37 +63,37 @@ bams = Channel.fromPath( params.input_folder+'/*.bam' )
 
 
 process qualimap {
- publishDir '${params.output_folder}', mode: 'copy'
+    cpu params.cpu
+    memory params.mem+'G'
+  	tag { bam_tag }
+
+    publishDir '${params.output_folder}', mode: 'copy'
 
     input:
     file bam from bams
 
     output:
-   set file('*.html') into qualimap_results
+    set file('*.html') into qualimap_results
 
-    script:
-
-    """
-   ${params.qualimap} bamqc -nt ${params.cpu} -bam ${bam} --java-mem-size=40G -outdir ${params.output_folder} -outformat html
-   ${params.samtools} flagstat ${bam} > ${bam.baseName}.dup.stats.txt
-    """
+    shell:
+    bam_tag=bam.baseName
+    '''
+    !{params.qualimap} bamqc -nt !{params.cpu} -bam !{bam} --java-mem-size=!{params.mem}G -outdir !{params.output_folder} -outformat html
+    !{params.samtools} flagstat !{bam} > !{bam_tag}.dup.stats.txt
+    '''
 }
 
-process multiqc{
-            cpus '1'
-             
-            input:
-	    	 file(filehtml)  from qualimap_results
-	output :
-	publishDir '${params.output_folder}', mode: 'copy', pattern: '{*.html}'
-            shell:
-            '''
-	  ${params.multiqc} -d !{params.output_folder}
-	  
-	  
-            '''
+process multiqc {
+    cpus params.cpu
+    memory params.mem+'G'
+
+    publishDir '${params.output_folder}', mode: 'copy', pattern: '{*.html}'
+
+    input:
+    file(filehtml)  from qualimap_results
+
+    shell:
+    '''
+	  !{params.multiqc} -d !{params.output_folder}
+    '''
 }
-
-
-
-    

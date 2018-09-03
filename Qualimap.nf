@@ -54,7 +54,7 @@ if (params.help) {
     log.info "Flags:"
     log.info "--help                                      Display this message"
     log.info ""
-    exit 1
+    exit 0
 }
 
 bams = Channel.fromPath( params.input_folder+'/*.bam' )

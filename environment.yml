@@ -2,7 +2,9 @@ name: Qualimap
 channels:
   - conda-forge
   - bioconda
+  - anaconda
 dependencies:
   - multiqc=1.6
   - qualimap=2.2.2b
   - samtools=1.8
+  - font-ttf-dejavu-sans-mono

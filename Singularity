@@ -3,7 +3,7 @@ Bootstrap:docker
 
 %labels
     MAINTAINER Tiffany Delhomme <delhommet@students.iarc.fr>
-    DESCRIPTION Container image containing all requirements for Qualimap-nf
+    DESCRIPTION Container image containing all requirements for qualimap-nf
     VERSION 1.0
 
 %files

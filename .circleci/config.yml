@@ -6,9 +6,11 @@ jobs:
       steps:
         - checkout
         - run: wget -qO- get.nextflow.io | bash ; chmod 755 nextflow ; sudo mv ~/project/nextflow /usr/local/bin/
+        - run: git clone --depth=1 https://github.com/IARCbioinfo/data_test.git
         - run: echo " docker.runOptions = '-u $(id -u):$(id -g)' " > ~/.nextflow/config
         - run: cd ~/project/ ; docker build -t iarcbioinfo/qualimap-nf .
         - run: cd ; nextflow run ~/project/Qualimap.nf --help
+        - run: cd ; nextflow run ~/project/Qualimap.nf --input_folder ~/project/data_test/BAM/ --output_folder ~/results/        
         - deploy:
             branch: [dev, master]
             command: chmod +x deploy.sh && ./deploy.sh

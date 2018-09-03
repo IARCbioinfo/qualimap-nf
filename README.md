@@ -1,10 +1,14 @@
 # Quality control of WGS alignment data #
 
+[![CircleCI](https://circleci.com/gh/IARCbioinfo/Qualimap-nf.svg?style=svg)](https://circleci.com/gh/IARCbioinfo/Qualimap-nf)
+[![Docker Hub](https://img.shields.io/badge/docker-ready-blue.svg)](https://hub.docker.com/r/iarcbioinfo/qualimap-nf/)
+[![https://www.singularity-hub.org/static/img/hosted-singularity--hub-%23e32929.svg](https://www.singularity-hub.org/static/img/hosted-singularity--hub-%23e32929.svg)](https://singularity-hub.org/collections/1623)
+
 ![Image Qualimap](https://github.com/ImaneLboukili/WGS_analysis/blob/master/Qualimap/Qualimap-nf.png)
 
 ## Description ##
 
-Perform quality control of WGS alignment data. 
+Perform quality control of WGS alignment data.
 
 ## Dependencies ##
 
@@ -46,10 +50,9 @@ Flags are special parameters without value.
 ## Usage ##
 `nextflow run iarcbioinfo/Qualimap.nf   --qualimap /path/to/qualimap  --multiqc /path/to/multiqc --samtools /path/to/samtools --input_folder /path/to/bam  --output_folder /path/to/output`
 
-## Output ## 
+## Output ##
 
 
 **Name**        | **Description**
 --------------- | -------------
 HTMLs           | An html file for each analysed BAM file, and one containing the aggregated results
-

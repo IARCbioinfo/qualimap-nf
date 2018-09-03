@@ -1,0 +1,14 @@
+version: 2
+
+jobs:
+    build:
+      machine: true
+      steps:
+        - checkout
+        - run: wget -qO- get.nextflow.io | bash ; chmod 755 nextflow ; sudo mv ~/project/nextflow /usr/local/bin/
+        - run: echo " docker.runOptions = '-u $(id -u):$(id -g)' " > ~/.nextflow/config
+        - run: cd ~/project/ ; docker build -t iarcbioinfo/qualimap-nf .
+        - run: cd ; nextflow run ~/project/script.nf --help
+        - deploy:
+            branch: [dev, master]
+            command: chmod +x deploy.sh && ./deploy.sh

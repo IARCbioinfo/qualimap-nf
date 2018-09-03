@@ -1,23 +1,22 @@
 ################## BASE IMAGE ######################
-FROM biocontainers/biocontainers:v1.0.0_cv4
+FROM nfcore/base
 
 ################## METADATA ######################
 
-LABEL base_image="biocontainers:v1.0.0_cv4"
+LABEL base_image="nfcore/base"
 LABEL version="1.0"
-LABEL software="Qualimap"
+LABEL software="Qualimap-nf"
 LABEL software.version="1.0"
-LABEL about.summary="Quality control of WGS alignment data"
-LABEL about.home="https://github.com/ImaneLboukili/WGS_analysis/tree/master/Qualimap"
-LABEL about.documentation="https://github.com/ImaneLboukili/WGS_analysis/tree/master/Qualimap/README.md"
-LABEL about.license_file="https://github.com/ImaneLboukili/WGS_analysis/tree/master/Qualimap/LICENSE.txt"
+LABEL about.summary="Container image containing all requirements for Qualimap-nf"
+LABEL about.home="http://github.com/IARCbioinfo/Qualimap-nf"
+LABEL about.documentation="http://github.com/IARCbioinfo/Qualimap-nf/README.md"
+LABEL about.license_file="http://github.com/IARCbioinfo/Qualimap-nf/LICENSE.txt"
 LABEL about.license="GNU-3.0"
 
 ################## MAINTAINER ######################
-MAINTAINER Imane Lboukili <lboukilii@students.iarc.fr>
+MAINTAINER Tiffany Delhomme <delhommet@students.iarc.fr>
 
 ################## INSTALLATION ######################
 
 COPY environment.yml /
-RUN conda env create -f /environment.yml && conda clean -a
-ENV PATH /opt/conda/envs/Qualimap/bin:$PATH
+RUN conda env update -n root -f /environment.yml && conda clean -a

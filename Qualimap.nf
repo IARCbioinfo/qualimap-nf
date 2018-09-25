@@ -79,6 +79,7 @@ process qualimap {
 
     output:
     file ("results_qualimap_${bam_tag}") into qualimap_results
+    file ("${bam_tag}.dup.stats.txt") into flagstat_results
 
     shell:
     bam_tag=bam.baseName
@@ -96,6 +97,7 @@ process multiqc {
 
     input:
     file qualimap_results from qualimap_results.collect()
+    file flagstat_results from flagstat_results.collect()
 
     output:
     file("multiqc_report.html") into final_output

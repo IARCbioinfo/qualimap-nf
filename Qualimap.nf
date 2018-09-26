@@ -83,7 +83,7 @@ process qualimap {
     shell:
     bam_tag=bam.baseName
     '''
-    !{params.qualimap} bamqc -nt !{params.cpu} -bam !{bam} --java-mem-size=!{params.mem}G -outdir results_qualimap_!{bam_tag} -outformat html
+    !{params.qualimap} bamqc -nt !{params.cpu} --skip-duplicated -bam !{bam} --java-mem-size=!{params.mem}G -outdir results_qualimap_!{bam_tag} -outformat html
     !{params.samtools} flagstat !{bam} > !{bam_tag}.dup.stats.txt
     '''
 }

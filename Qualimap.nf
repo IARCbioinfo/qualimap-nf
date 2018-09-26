@@ -24,7 +24,6 @@ params.qualimap = "qualimap"
 params.samtools = "samtools"
 params.multiqc = "multiqc"
 params.input_folder = "BAM/"
-params.output_folder = "."
 
 log.info ""
 log.info "----------------------------------------------------------------"

@@ -71,7 +71,7 @@ process qualimap {
     memory params.mem+'G'
     tag { bam_tag }
 
-    publishDir params.output_folder+'/individual_reports/', mode: 'copy'
+    publishDir "${params.output_folder}/individual_reports", mode: 'copy'
 
     input:
     file bam from bams

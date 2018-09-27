@@ -71,20 +71,20 @@ process qualimap {
     memory params.mem+'G'
     tag { bam_tag }
 
-    publishDir "${params.output_folder}", mode: 'copy' // remove this line do do not output qualimap results
+    publishDir "${params.output_folder/individual_reports}", mode: 'copy'
 
     input:
     file bam from bams
 
     output:
-    file ("results_qualimap_${bam_tag}") into qualimap_results
-    file ("${bam_tag}.dup.stats.txt") into flagstat_results
+    file ("${bam_tag}") into qualimap_results
+    file ("${bam_tag}.stats.txt") into flagstat_results
 
     shell:
     bam_tag=bam.baseName
     '''
-    !{params.qualimap} bamqc -nt !{params.cpu} --skip-duplicated -bam !{bam} --java-mem-size=!{params.mem}G -outdir results_qualimap_!{bam_tag} -outformat html
-    !{params.samtools} flagstat !{bam} > !{bam_tag}.dup.stats.txt
+    !{params.qualimap} bamqc -nt !{params.cpu} --skip-duplicated -bam !{bam} --java-mem-size=!{params.mem}G -outdir !{bam_tag} -outformat html
+    !{params.samtools} flagstat !{bam} > !{bam_tag}.stats.txt
     '''
 }
 
@@ -92,7 +92,7 @@ process multiqc {
     cpus params.cpu
     memory params.mem+'G'
 
-    publishDir "${params.output_folder}", mode: 'copy', pattern: '{multiqc_report.html}'
+    publishDir "${params.output_folder}", mode: 'copy'
 
     input:
     file qualimap_results from qualimap_results.collect()
@@ -100,9 +100,10 @@ process multiqc {
 
     output:
     file("multiqc_report.html") into final_output
-
+    file("multiqc_data/") into final_output_data
+    
     shell:
     '''
-	  !{params.multiqc} .
+    !{params.multiqc} .
     '''
 }

@@ -25,8 +25,6 @@ params.samtools = "samtools"
 params.multiqc = "multiqc"
 params.input_folder = null
 
-assert (params.input_folder != null) : "please provide the --input_folder option"
-
 log.info ""
 log.info "----------------------------------------------------------------"
 log.info "           Quality control with Qualimap  and MultiQC           "
@@ -62,6 +60,8 @@ if (params.help) {
     log.info ""
     exit 0
 }
+
+assert (params.input_folder != null) : "please provide the --input_folder option"
 
 bams = Channel.fromPath( params.input_folder+'/*.bam' )
               .ifEmpty { error "Cannot find any bam file in: ${params.input_folder}" }

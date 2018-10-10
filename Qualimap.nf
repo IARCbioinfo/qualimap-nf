@@ -23,7 +23,9 @@ params.mem = 4
 params.qualimap = "qualimap"
 params.samtools = "samtools"
 params.multiqc = "multiqc"
-params.input_folder = "BAM/"
+params.input_folder = null
+
+assert (params.input_folder != null) : "please provide the --input_folder option"
 
 log.info ""
 log.info "----------------------------------------------------------------"
@@ -44,13 +46,13 @@ if (params.help) {
     log.info "nextflow run iarcbioinfo/Qualimap.nf   --qualimap /path/to/qualimap  --multiqc /path/to/multiqc --samtools /path/to/samtools --input_folder /path/to/bam  --output_folder /path/to/output"
     log.info ""
     log.info "Mandatory arguments:"
-    log.info "--qualimap             PATH                 Qualimap installation dir"
-    log.info "--samtools             PATH                 Samtools installation dir"
-    log.info "--multiqc              PATH                 MultiQC installation dir"
-    log.info "--input_folder         FOLDER               Folder containing bam files (default=BAM/)"
-    log.info "--output_folder        PATH                 Output directory for html and zip files (default=.)"
+    log.info "--input_folder         FOLDER               Folder containing bam files"
     log.info ""
     log.info "Optional arguments:"
+    log.info "--qualimap             PATH                 Qualimap installation dir (default=qualimap)"
+    log.info "--samtools             PATH                 Samtools installation dir (default=samtools)"
+    log.info "--multiqc              PATH                 MultiQC installation dir (default=multiqc)"
+    log.info "--output_folder        PATH                 Output directory for html and zip files (default=.)"
     log.info "--cpu                  INTEGER              Number of cpu to use (default=1)"
     log.info "--config               FILE                 Use custom configuration file"
     log.info "--mem                  INTEGER              Size of memory used. Default 4Gb"
@@ -63,8 +65,6 @@ if (params.help) {
 
 bams = Channel.fromPath( params.input_folder+'/*.bam' )
               .ifEmpty { error "Cannot find any bam file in: ${params.input_folder}" }
-
-
 
 process qualimap {
     cpus params.cpu
@@ -101,7 +101,7 @@ process multiqc {
     output:
     file("multiqc_report.html") into final_output
     file("multiqc_data/") into final_output_data
-    
+
     shell:
     '''
     !{params.multiqc} .

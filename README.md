@@ -3,6 +3,7 @@
 [![CircleCI](https://circleci.com/gh/IARCbioinfo/Qualimap-nf.svg?style=svg)](https://circleci.com/gh/IARCbioinfo/Qualimap-nf)
 [![Docker Hub](https://img.shields.io/badge/docker-ready-blue.svg)](https://hub.docker.com/r/iarcbioinfo/qualimap-nf/)
 [![https://www.singularity-hub.org/static/img/hosted-singularity--hub-%23e32929.svg](https://www.singularity-hub.org/static/img/hosted-singularity--hub-%23e32929.svg)](https://singularity-hub.org/collections/1623)
+[![DOI](https://zenodo.org/badge/145996279.svg)](https://zenodo.org/badge/latestdoi/145996279)
 
 ![Image Qualimap](https://github.com/ImaneLboukili/WGS_analysis/blob/master/Qualimap/Qualimap-nf.png)
 

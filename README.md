@@ -1,4 +1,4 @@
-# Quality control of WGS alignment data #
+# Quality control of WGS/WES/target alignment data #
 
 [![CircleCI](https://circleci.com/gh/IARCbioinfo/Qualimap-nf.svg?style=svg)](https://circleci.com/gh/IARCbioinfo/Qualimap-nf)
 [![Docker Hub](https://img.shields.io/badge/docker-ready-blue.svg)](https://hub.docker.com/r/iarcbioinfo/qualimap-nf/)
@@ -9,7 +9,7 @@
 
 ## Description ##
 
-Perform quality control of WGS alignment data.
+Perform quality control of WGS/WES/target alignment data.
 
 ## Dependencies ##
 

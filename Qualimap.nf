@@ -50,6 +50,7 @@ if (params.help) {
     log.info "--qualimap             PATH                 Qualimap installation dir (default=qualimap)"
     log.info "--samtools             PATH                 Samtools installation dir (default=samtools)"
     log.info "--multiqc              PATH                 MultiQC installation dir (default=multiqc)"
+    log.info "--feature_file         FILE                 Qualimap feature file for coverage analysis"
     log.info "--output_folder        PATH                 Output directory for html and zip files (default=.)"
     log.info "--cpu                  INTEGER              Number of cpu to use (default=1)"
     log.info "--config               FILE                 Use custom configuration file"
@@ -63,6 +64,9 @@ if (params.help) {
 
 assert (params.input_folder != null) : "please provide the --input_folder option"
 
+params.feature_file = 'NO_FILE'
+qualimap_ff         = file(params.feature_file)
+
 bams = Channel.fromPath( params.input_folder+'/*.bam' )
               .ifEmpty { error "Cannot find any bam file in: ${params.input_folder}" }
 
@@ -75,6 +79,7 @@ process qualimap {
 
     input:
     file bam from bams
+    file qff from qualimap_ff
 
     output:
     file ("${bam_tag}") into qualimap_results
@@ -82,8 +87,9 @@ process qualimap {
 
     shell:
     bam_tag=bam.baseName
+    feature = qff.name != 'NO_FILE' ? "--feature-file $qff" : ''
     '''
-    !{params.qualimap} bamqc -nt !{params.cpu} --skip-duplicated -bam !{bam} --java-mem-size=!{params.mem}G -outdir !{bam_tag} -outformat html
+    !{params.qualimap} bamqc -nt !{params.cpu} !{feature} --skip-duplicated -bam !{bam} --java-mem-size=!{params.mem}G -outdir !{bam_tag} -outformat html
     !{params.samtools} flagstat !{bam} > !{bam_tag}.stats.txt
     '''
 }

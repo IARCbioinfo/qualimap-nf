@@ -32,6 +32,7 @@ Perform quality control of WGS alignment data.
 **Name**          | **Example value** | **Description**
 ------------------| ------------------| ------------------
 --qualimap        | /usr/bin/qualimap | Path to Qualimap installation directory
+--feature_file    | myfeatures.txt    | Qualimap feature file for coverage analysis
 --samtools        | /usr/bin/samtools | Path to samtools installation directory
 --multiqc         | /usr/bin/multiqc  | Path to MutliQC installation directory
 --cpu             | INTEGER           | Number of cpus to be used

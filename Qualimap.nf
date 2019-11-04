@@ -22,6 +22,7 @@ params.feature_file   = 'NO_FILE'
 params.cpu = 1
 params.mem = 4
 params.input_folder = null
+params.output_folder = "."
 
 log.info ""
 log.info "----------------------------------------------------------------"

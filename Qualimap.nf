@@ -16,13 +16,11 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-params.help	= null
-params.config = null
+params.help   = null
+params.multiqc_config = 'NO_FILE'
+params.feature_file   = 'NO_FILE'
 params.cpu = 1
 params.mem = 4
-params.qualimap = "qualimap"
-params.samtools = "samtools"
-params.multiqc = "multiqc"
 params.input_folder = null
 
 log.info ""
@@ -47,25 +45,31 @@ if (params.help) {
     log.info "--input_folder         FOLDER               Folder containing bam files"
     log.info ""
     log.info "Optional arguments:"
-    log.info "--qualimap             PATH                 Qualimap installation dir (default=qualimap)"
-    log.info "--samtools             PATH                 Samtools installation dir (default=samtools)"
-    log.info "--multiqc              PATH                 MultiQC installation dir (default=multiqc)"
     log.info "--feature_file         FILE                 Qualimap feature file for coverage analysis"
     log.info "--output_folder        PATH                 Output directory for html and zip files (default=.)"
     log.info "--cpu                  INTEGER              Number of cpu to use (default=1)"
-    log.info "--config               FILE                 Use custom configuration file"
+    log.info '--multiqc_config       STRING               Config yaml file for multiqc (default : none)'
     log.info "--mem                  INTEGER              Size of memory used. Default 4Gb"
     log.info ""
     log.info "Flags:"
     log.info "--help                                      Display this message"
     log.info ""
     exit 0
+}else{
+/* Software information */
+  log.info "input_folder   = ${params.input_folder}"
+  log.info "cpu            = ${params.cpu}"
+  log.info "mem            = ${params.mem}"
+  log.info "feature_file   = ${params.feature_file}"
+  log.info "output_folder  = ${params.output_folder}"
+  log.info "multiqc_config = ${params.multiqc_config}"
+  log.info "help           = ${params.help}"
 }
 
 assert (params.input_folder != null) : "please provide the --input_folder option"
 
-params.feature_file = 'NO_FILE'
-qualimap_ff         = file(params.feature_file)
+qualimap_ff = file(params.feature_file)
+multiqc_config = file(params.multiqc_config)
 
 bams = Channel.fromPath( params.input_folder+'/*.bam' )
               .ifEmpty { error "Cannot find any bam file in: ${params.input_folder}" }
@@ -89,8 +93,8 @@ process qualimap {
     bam_tag=bam.baseName
     feature = qff.name != 'NO_FILE' ? "--feature-file $qff" : ''
     '''
-    !{params.qualimap} bamqc -nt !{params.cpu} !{feature} --skip-duplicated -bam !{bam} --java-mem-size=!{params.mem}G -outdir !{bam_tag} -outformat html
-    !{params.samtools} flagstat !{bam} > !{bam_tag}.stats.txt
+    qualimap bamqc -nt !{params.cpu} !{feature} --skip-duplicated -bam !{bam} --java-mem-size=!{params.mem}G -outdir !{bam_tag} -outformat html
+    samtools flagstat !{bam} > !{bam_tag}.stats.txt
     '''
 }
 
@@ -103,13 +107,15 @@ process multiqc {
     input:
     file qualimap_results from qualimap_results.collect()
     file flagstat_results from flagstat_results.collect()
+    file config_file from multiqc_config
 
     output:
     file("multiqc_report.html") into final_output
     file("multiqc_data/") into final_output_data
 
     shell:
+    config = config_file.name != 'NO_FILE' ? "--config $config_file" : ''
     '''
-    !{params.multiqc} .
+    params.multiqc !{config} .
     '''
 }

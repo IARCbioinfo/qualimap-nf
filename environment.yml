@@ -3,6 +3,6 @@ channels:
   - conda-forge
   - bioconda
 dependencies:
-  - multiqc=1.6
-  - qualimap=2.2.2b
-  - samtools=1.8
+  - multiqc=1.7
+  - qualimap=2.2.2c
+  - samtools=1.9

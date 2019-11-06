@@ -22,18 +22,17 @@ Perform quality control of WGS/WES/target alignment data.
 **Name**        | **Description**
 --------------- | -------------
 --input_folder  |  Folder containing Fasta files
---output_folder |  Path to output folder
 
 ## Parameters ##
 
 ### Optional ###
 
-**Name**          | **Example value** | **Description**
+**Name**          | **Default value** | **Description**
 ------------------| ------------------| ------------------
+--output_folder | . | Path to output folder
 --qualimap        | /usr/bin/qualimap | Path to Qualimap installation directory
 --feature_file    | myfeatures.txt    | Qualimap feature file for coverage analysis
---samtools        | /usr/bin/samtools | Path to samtools installation directory
---multiqc         | /usr/bin/multiqc  | Path to MutliQC installation directory
+--multiqc_config   |  null | config yaml file for multiqc | 
 --cpu             | INTEGER           | Number of cpus to be used
 
 ### Flags ###
@@ -49,11 +48,21 @@ Flags are special parameters without value.
 `git clone https://github.com/iarcbioinfo/data_test`
 
 ## Usage ##
-`nextflow run iarcbioinfo/Qualimap-nf   --qualimap /path/to/qualimap  --multiqc /path/to/multiqc --samtools /path/to/samtools --input_folder /path/to/bam  --output_folder /path/to/output`
+`nextflow run iarcbioinfo/Qualimap-nf   --qualimap /path/to/qualimap  --input_folder /path/to/bam  --output_folder /path/to/output`
 
 ## Output ##
 
 
 **Name**        | **Description**
 --------------- | -------------
-HTMLs           | An html file for each analysed BAM file, and one containing the aggregated results
+HTMLs           | An html file for each analysed BAM file, and one containing the aggregated multiQC results
+
+## Contributions
+
+  | Name      | Email | Description     |
+  |-----------|---------------|-----------------| 
+  | Tiffany Delhomme | Delhommet@students.iarc.fr | developer |
+  | Maxime Vallee | Valleem@iarc.fr | developer |
+  | Matthieu Foll | Follm@iarc.fr | developer |
+  | Nicolas Alcala*    | AlcalaN@fellows.iarc.fr    | Developer to contact for support |
+  

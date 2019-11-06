@@ -117,6 +117,6 @@ process multiqc {
     shell:
     config = config_file.name != 'NO_FILE' ? "--config $config_file" : ''
     '''
-    params.multiqc !{config} .
+    multiqc !{config} .
     '''
 }

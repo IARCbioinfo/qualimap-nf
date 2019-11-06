@@ -1,5 +1,5 @@
 <!--
-  ~ Copyright 2013-2018, Centre for Genomic Regulation (CRG)
+  ~ Copyright 2013-2019, Centre for Genomic Regulation (CRG)
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -111,9 +111,10 @@ nodes: [
 { data: { id: 'p3', label: 'qualimap'}, classes: 'PROCESS' },
 { data: { id: 'p4', label: 'collect'}, classes: 'OPERATOR' },
 { data: { id: 'p5', label: 'collect'}, classes: 'OPERATOR' },
-{ data: { id: 'p6', label: 'multiqc'}, classes: 'PROCESS' },
-{ data: { id: 'p7'}, classes: 'NODE' },
+{ data: { id: 'p6'}, classes: 'ORIGIN' },
+{ data: { id: 'p7', label: 'multiqc'}, classes: 'PROCESS' },
 { data: { id: 'p8'}, classes: 'NODE' },
+{ data: { id: 'p9'}, classes: 'NODE' },
 ],
 edges: [
 { data: { source: 'p0', target: 'p1'} },
@@ -121,10 +122,11 @@ edges: [
 { data: { source: 'p2', target: 'p3', label: 'qff' } },
 { data: { source: 'p3', target: 'p4', label: 'qualimap_results' } },
 { data: { source: 'p3', target: 'p5', label: 'flagstat_results' } },
-{ data: { source: 'p4', target: 'p6'} },
-{ data: { source: 'p5', target: 'p6'} },
-{ data: { source: 'p6', target: 'p8', label: 'final_output' } },
-{ data: { source: 'p6', target: 'p7', label: 'final_output_data' } },
+{ data: { source: 'p4', target: 'p7'} },
+{ data: { source: 'p5', target: 'p7'} },
+{ data: { source: 'p6', target: 'p7', label: 'config_file' } },
+{ data: { source: 'p7', target: 'p9', label: 'final_output' } },
+{ data: { source: 'p7', target: 'p8', label: 'final_output_data' } },
 ],
 },
 

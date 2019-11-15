@@ -72,8 +72,11 @@ assert (params.input_folder != null) : "please provide the --input_folder option
 qualimap_ff = file(params.feature_file)
 multiqc_config = file(params.multiqc_config)
 
-bams = Channel.fromPath( params.input_folder+'/*.bam' )
+bams_init = Channel.fromPath( params.input_folder+'/*.bam' )
               .ifEmpty { error "Cannot find any bam file in: ${params.input_folder}" }
+
+
+bams_init.into{ bams; bams2 }
 
 process qualimap {
     cpus params.cpu
@@ -88,14 +91,33 @@ process qualimap {
 
     output:
     file ("${bam_tag}") into qualimap_results
-    file ("${bam_tag}.stats.txt") into flagstat_results
 
     shell:
     bam_tag=bam.baseName
     feature = qff.name != 'NO_FILE' ? "--feature-file $qff" : ''
+    mem_qm = params.mem -1
     '''
     qualimap bamqc -nt !{params.cpu} !{feature} --skip-duplicated -bam !{bam} --java-mem-size=!{params.mem}G -outdir !{bam_tag} -outformat html
-    samtools flagstat !{bam} > !{bam_tag}.stats.txt
+    '''
+}
+
+process flagstat {
+    cpus params.cpu
+    memory params.mem+'G'
+    tag { bam_tag }
+
+    publishDir "${params.output_folder}/individual_reports", mode: 'copy'
+
+    input:
+    file bam from bams2
+
+    output:
+    file ("${bam_tag}.stats.txt") into flagstat_results
+
+    shell:
+    bam_tag=bam.baseName
+    '''
+    samtools flagstat --threads !{params.cpu} !{bam} > !{bam_tag}.stats.txt
     '''
 }
 

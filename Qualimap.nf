@@ -97,7 +97,7 @@ process qualimap {
     feature = qff.name != 'NO_FILE' ? "--feature-file $qff" : ''
     mem_qm = params.mem -1
     '''
-    qualimap bamqc -nt !{params.cpu} !{feature} --skip-duplicated -bam !{bam} --java-mem-size=!{params.mem}G -outdir !{bam_tag} -outformat html
+    qualimap bamqc -nt !{params.cpu} !{feature} --skip-duplicated -bam !{bam} --java-mem-size=!{mem_qm}G -outdir !{bam_tag} -outformat html
     '''
 }
 

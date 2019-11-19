@@ -19,4 +19,5 @@ MAINTAINER Tiffany Delhomme <delhommet@students.iarc.fr>
 ################## INSTALLATION ######################
 
 COPY environment.yml /
-RUN conda env update -n root -f /environment.yml && conda clean -a
+RUN conda env create -f /environment.yml && conda clean -a
+ENV PATH /opt/conda/envs/Qualimap/bin:$PATH

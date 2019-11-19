@@ -10,7 +10,7 @@ jobs:
         - run: echo " docker.runOptions = '-u $(id -u):$(id -g)' " > ~/.nextflow/config
         - run: cd ~/project/ ; docker build -t iarcbioinfo/qualimap-nf .
         - run: cd ; nextflow run ~/project/Qualimap.nf --help
-        - run: cd ; nextflow run ~/project/Qualimap.nf -with-docker iarcbioinfo/qualimap-nf --input_folder ~/data_test/BAM/ --output_folder ~/results/
+        - run: cd ; nextflow run ~/project/Qualimap.nf -with-docker iarcbioinfo/qualimap-nf --input_folder ~/data_test/BAM/ --output_folder ~/results/ --output_format pdf
         - run: cd ; mv ~/results/nf-pipeline_info/Qualimap_dag.html ~/project/
         - deploy:
             branch: [dev, master]

@@ -20,9 +20,10 @@ params.help   = null
 params.multiqc_config = 'NO_FILE'
 params.feature_file   = 'NO_FILE'
 params.cpu = 1
-params.mem = 4
+params.mem = 40
 params.input_folder = null
 params.output_folder = "."
+params.output_format = "html"
 
 log.info ""
 log.info "----------------------------------------------------------------"
@@ -48,6 +49,7 @@ if (params.help) {
     log.info "Optional arguments:"
     log.info "--feature_file         FILE                 Qualimap feature file for coverage analysis"
     log.info "--output_folder        PATH                 Output directory for html and zip files (default=.)"
+    log.info "--output_format        STRING               Output format for individual qualimap files, html or pdf (default=html)"
     log.info "--cpu                  INTEGER              Number of cpu to use (default=1)"
     log.info '--multiqc_config       STRING               Config yaml file for multiqc (default : none)'
     log.info "--mem                  INTEGER              Size of memory used. Default 4Gb"
@@ -63,6 +65,7 @@ if (params.help) {
   log.info "mem            = ${params.mem}"
   log.info "feature_file   = ${params.feature_file}"
   log.info "output_folder  = ${params.output_folder}"
+  log.info "output_format  = ${params.output_format}"
   log.info "multiqc_config = ${params.multiqc_config}"
   log.info "help           = ${params.help}"
 }
@@ -95,9 +98,9 @@ process qualimap {
     shell:
     bam_tag=bam.baseName
     feature = qff.name != 'NO_FILE' ? "--feature-file $qff" : ''
-    mem_qm = params.mem -1
+    mem_qm = params.mem.intdiv(2)
     '''
-    qualimap bamqc -nt !{params.cpu} !{feature} --skip-duplicated -bam !{bam} --java-mem-size=!{mem_qm}G -outdir !{bam_tag} -outformat html
+    qualimap bamqc -nt !{params.cpu} !{feature} --skip-duplicated -bam !{bam} --java-mem-size=!{mem_qm}G -outdir !{bam_tag} -outformat !{params.output_format}
     '''
 }
 
